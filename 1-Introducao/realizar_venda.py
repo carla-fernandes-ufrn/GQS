@@ -9,7 +9,9 @@ usuario = Usuario("Carla")
 
 venda = Venda(usuario)
 
-venda.inserir_produto(produto1, 5)
+venda.inserir_produto(produto1, 2)
+venda.inserir_produto(produto2, 3)
+venda.inserir_produto(produto2, 3)
 venda.inserir_produto(produto2, 3)
 
 for produto, qtd in venda.produtos:

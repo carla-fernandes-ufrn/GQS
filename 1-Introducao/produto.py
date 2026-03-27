@@ -10,7 +10,7 @@ class Produto:
     def remover_estoque(self, quantidade):
         if quantidade > self.estoque:
             raise EstoqueInsuficiente(
-                f"Produto {self.nome} não possui estoque suficiente"
+                f"Produto {self.nome} não possui estoque suficiente. Temos {self.estoque} unidades disponíveis."
             )
 
         self.estoque -= quantidade
