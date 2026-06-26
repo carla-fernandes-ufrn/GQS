@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Tarefas</title>
+</head>
+
+<body>
+
+    <h1>Cadastro de Tarefas</h1>
+
+    <p id="mensagem" class="erro"></p>
+
+    <input
+        id="titulo"
+        type="text"
+        placeholder="Título da tarefa">
+
+    <textarea
+        id="descricao"
+        placeholder="Descrição"></textarea>
+
+    <button id="salvar" onclick="salvarTarefa()">
+        Salvar
+    </button>
+
+    <h2>Tarefas Cadastradas</h2>
+
+    <div id="lista-tarefas"></div>
+
+    <script>
+
+        function salvarTarefa() {
+
+            const titulo =
+                document.getElementById("titulo");
+
+            const descricao =
+                document.getElementById("descricao");
+
+            const mensagem =
+                document.getElementById("mensagem");
+
+            const lista =
+                document.getElementById("lista-tarefas");
+
+
+            mensagem.innerText = "";
+
+            if (titulo.value.trim() === "") {
+
+                mensagem.innerText =
+                    "Título obrigatório";
+
+                return;
+            }
+
+            const novaTarefa =
+                document.createElement("div");
+
+            novaTarefa.className = "tarefa";
+
+            novaTarefa.innerHTML = `
+                <h3>${titulo.value}</h3>
+                <p>${descricao.value}</p>
+            `;
+
+            lista.appendChild(novaTarefa);
+
+            titulo.value = "";
+            descricao.value = "";
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+
+<h1>Sistema de Login</h1>
+
+<input id="usuario" placeholder="Usuário">
+<input id="senha" type="password" placeholder="Senha">
+
+<button id="login" onclick="fazerLogin()">
+    Entrar
+</button>
+
+<p id="msg"></p>
+
+<script>
+function fazerLogin() {
+
+    const usuario =
+        document.getElementById("usuario").value;
+
+    const senha =
+        document.getElementById("senha").value;
+
+    const msg =
+        document.getElementById("msg");
+
+    if (usuario === "admin" && senha === "123") {
+        msg.innerText = "Bem-vindo!";
+    }
+    else {
+        msg.innerText = "Login invalido";
+    }
+}
+</script>
+
+</body>
+</html>

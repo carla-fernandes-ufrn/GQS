@@ -1,0 +1,97 @@
+import unittest
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+
+class TestTarefas(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+        self.driver.get("http://localhost:8000/cadastro.html")
+
+    def tearDown(self):
+        self.driver.quit()
+
+    def test_cadastro_com_sucesso(self):
+        titulo = self.driver.find_element(By.ID, "titulo")
+        descricao = self.driver.find_element(By.ID, "descricao")
+        botao = self.driver.find_element(By.ID, "salvar")
+
+        titulo.send_keys("Estudar Selenium")
+        descricao.send_keys("Praticar testes automatizados")
+        botao.click()
+
+        lista = self.driver.find_element(By.ID, "lista-tarefas")
+
+        self.assertIn("Estudar Selenium", lista.text)
+        self.assertIn("Praticar testes automatizados", lista.text)
+
+    def test_nao_cadastra_sem_titulo(self):
+        descricao = self.driver.find_element(By.ID, "descricao")
+        botao = self.driver.find_element(By.ID, "salvar")
+
+        descricao.send_keys("Descrição sem título")
+        botao.click()
+
+        mensagem = self.driver.find_element(By.ID, "mensagem")
+        tarefas = self.driver.find_elements(By.CLASS_NAME, "tarefa")
+
+        self.assertEqual(mensagem.text, "Título obrigatório")
+        self.assertEqual(len(tarefas), 0)
+
+    def test_cadastra_duas_tarefas(self):
+        titulo = self.driver.find_element(By.ID, "titulo")
+        descricao = self.driver.find_element(By.ID, "descricao")
+        botao = self.driver.find_element(By.ID, "salvar")
+
+        titulo.send_keys("Tarefa 1")
+        descricao.send_keys("Descrição da tarefa 1")
+        botao.click()
+
+        titulo = self.driver.find_element(By.ID, "titulo")
+        descricao = self.driver.find_element(By.ID, "descricao")
+
+        titulo.send_keys("Tarefa 2")
+        descricao.send_keys("Descrição da tarefa 2")
+        botao.click()
+
+        tarefas = self.driver.find_elements(By.CLASS_NAME, "tarefa")
+
+        self.assertEqual(len(tarefas), 2)
+
+    def test_limpa_formulario_apos_salvar(self):
+        titulo = self.driver.find_element(By.ID, "titulo")
+        descricao = self.driver.find_element(By.ID, "descricao")
+        botao = self.driver.find_element(By.ID, "salvar")
+
+        titulo.send_keys("Estudar testes")
+        descricao.send_keys("Estudar Selenium com unittest")
+        botao.click()
+
+        self.assertEqual(titulo.get_attribute("value"), "")
+        self.assertEqual(descricao.get_attribute("value"), "")
+
+    def test_multiplas_tarefas_aparecem_na_ordem_correta(self):
+        botao = self.driver.find_element(By.ID, "salvar")
+
+        titulo = self.driver.find_element(By.ID, "titulo")
+        descricao = self.driver.find_element(By.ID, "descricao")
+        titulo.send_keys("Primeira tarefa")
+        descricao.send_keys("Descrição 1")
+        botao.click()
+
+        titulo = self.driver.find_element(By.ID, "titulo")
+        descricao = self.driver.find_element(By.ID, "descricao")
+        titulo.send_keys("Segunda tarefa")
+        descricao.send_keys("Descrição 2")
+        botao.click()
+
+        tarefas = self.driver.find_elements(By.CLASS_NAME, "tarefa")
+
+        self.assertEqual(tarefas[0].find_element(By.TAG_NAME, "h3").text, "Primeira tarefa")
+        self.assertEqual(tarefas[1].find_element(By.TAG_NAME, "h3").text, "Segunda tarefa")
+
+
+if __name__ == "__main__":
+    unittest.main()

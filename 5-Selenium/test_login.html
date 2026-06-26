@@ -1,0 +1,22 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from time import sleep
+
+driver = webdriver.Chrome()
+
+driver.get("http://localhost:8000/login.html")
+
+usuario = driver.find_element(By.ID, "usuario")
+senha = driver.find_element(By.ID, "senha")
+botao = driver.find_element(By.ID, "login")
+
+usuario.send_keys("admin")
+senha.send_keys("123")
+
+sleep(1)
+
+botao.click()
+
+sleep(3)
+
+driver.quit()

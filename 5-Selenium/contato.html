@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Contato</title>
+</head>
+<body>
+
+    <h1>Contato</h1>
+
+    <label for="nome">Nome:</label>
+    <input id="nome" type="text">
+
+    <br><br>
+
+    <label for="email">Email:</label>
+    <input id="email" type="email">
+
+    <br><br>
+
+    <label for="mensagem">Mensagem:</label>
+    <textarea id="mensagem"></textarea>
+
+    <br><br>
+
+    <button id="enviar" onclick="enviarMensagem()">Enviar</button>
+
+    <p id="resultado"></p>
+
+    <br>
+
+    <a id="link-inicio" href="index.html">Voltar para a página inicial</a>
+
+    <script>
+        function enviarMensagem() {
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const mensagem = document.getElementById("mensagem").value;
+            const resultado = document.getElementById("resultado");
+
+            if (nome.trim() === "" || email.trim() === "" || mensagem.trim() === "") {
+                resultado.innerText = "Preencha todos os campos";
+            } else {
+                resultado.innerText = "Mensagem enviada com sucesso";
+            }
+        }
+    </script>
+
+</body>
+</html>
